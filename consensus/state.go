@@ -811,13 +811,16 @@ func (cs *ConsensusState) defaultDecideProposal(height, round int) {
 		*/
 
 		// send proposal and block parts on internal msg queue
-		cs.sendInternalMessage(msgInfo{&ProposalMessage{proposal}, ""})
+		cs.Logger.Info("***EVIL***: defaultDecideProposal: NO SEND ProposalMessage", "height", height, "round", round, "proposal", proposal)
+		//cs.sendInternalMessage(msgInfo{&ProposalMessage{proposal}, ""})
 		for i := 0; i < blockParts.Total(); i++ {
-			part := blockParts.GetPart(i)
-			cs.sendInternalMessage(msgInfo{&BlockPartMessage{cs.Height, cs.Round, part}, ""})
+			//part := blockParts.GetPart(i)
+			cs.Logger.Info("***EVIL***: NO SEND blockParts", "height", height, "round", round, "proposal", proposal)
+			//cs.sendInternalMessage(msgInfo{&BlockPartMessage{cs.Height, cs.Round, part}, ""})
 		}
-		cs.Logger.Info("Signed proposal", "height", height, "round", round, "proposal", proposal)
-		cs.Logger.Debug(cmn.Fmt("Signed proposal block: %v", block))
+		//cs.Logger.Info("Signed proposal", "height", height, "round", round, "proposal", proposal)
+		//cs.Logger.Debug(cmn.Fmt("Signed proposal block: %v", block))
+
 	} else {
 		if !cs.replayMode {
 			cs.Logger.Error("enterPropose: Error signing proposal", "height", height, "round", round, "err", err)
