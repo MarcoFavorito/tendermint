@@ -224,7 +224,7 @@ func (c *MConnection) Send(chID byte, msg interface{}) bool {
 		return false
 	}
 
-	c.Logger.Debug("Send", "channel", chID, "conn", c, "msg", msg) //, "bytes", wire.BinaryBytes(msg))
+	c.Logger.Debug("Send (EVIL!)", "channel", chID, "conn", c, "msg", msg) //, "bytes", wire.BinaryBytes(msg))
 
 	// Send message to channel.
 	//channel, ok := c.channelsIdx[chID]
@@ -257,7 +257,7 @@ func (c *MConnection) TrySend(chID byte, msg interface{}) bool {
 		return false
 	}
 
-	c.Logger.Debug("TrySend", "channel", chID, "conn", c, "msg", msg)
+	c.Logger.Debug("TrySend (EVIL!)", "channel", chID, "conn", c, "msg", msg)
 
 	// Send message to channel.
 	//channel, ok := c.channelsIdx[chID]
