@@ -227,13 +227,17 @@ func (c *MConnection) Send(chID byte, msg interface{}) bool {
 	c.Logger.Debug("Send", "channel", chID, "conn", c, "msg", msg) //, "bytes", wire.BinaryBytes(msg))
 
 	// Send message to channel.
-	channel, ok := c.channelsIdx[chID]
+	//channel, ok := c.channelsIdx[chID]
+	_, ok := c.channelsIdx[chID]
+
 	if !ok {
 		c.Logger.Error(cmn.Fmt("Cannot send bytes, unknown channel %X", chID))
 		return false
 	}
 
-	success := channel.sendBytes(wire.BinaryBytes(msg))
+	//success := channel.sendBytes(wire.BinaryBytes(msg))
+	success:=true
+
 	if success {
 		// Wake up sendRoutine if necessary
 		select {
@@ -256,13 +260,15 @@ func (c *MConnection) TrySend(chID byte, msg interface{}) bool {
 	c.Logger.Debug("TrySend", "channel", chID, "conn", c, "msg", msg)
 
 	// Send message to channel.
-	channel, ok := c.channelsIdx[chID]
+	//channel, ok := c.channelsIdx[chID]
+	_, ok := c.channelsIdx[chID]
+
 	if !ok {
 		c.Logger.Error(cmn.Fmt("Cannot send bytes, unknown channel %X", chID))
 		return false
 	}
 
-	ok = channel.trySendBytes(wire.BinaryBytes(msg))
+	//ok = channel.trySendBytes(wire.BinaryBytes(msg))
 	if ok {
 		// Wake up sendRoutine if necessary
 		select {

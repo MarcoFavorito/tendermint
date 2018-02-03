@@ -11,6 +11,7 @@ import (
 	crypto "github.com/tendermint/go-crypto"
 	wire "github.com/tendermint/go-wire"
 	cmn "github.com/tendermint/tmlibs/common"
+	"github.com/tendermint/tmlibs/log"
 )
 
 // Peer is an interface representing a peer connected on a reactor.
@@ -64,6 +65,7 @@ type PeerConfig struct {
 	Fuzz       bool            `mapstructure:"fuzz"` // fuzz connection (for testing)
 	FuzzConfig *FuzzConnConfig `mapstructure:"fuzz_config"`
 }
+
 
 // DefaultPeerConfig returns the default config.
 func DefaultPeerConfig() *PeerConfig {
@@ -134,6 +136,11 @@ func newPeerFromConnAndConfig(rawConn net.Conn, outbound bool, reactorsByCh map[
 	p.BaseService = *cmn.NewBaseService(nil, "Peer", p)
 
 	return p, nil
+}
+
+func (p *peer) SetLogger(l log.Logger) {
+	p.Logger = l
+	p.mconn.SetLogger(l)
 }
 
 // CloseConn should be used when the peer was created, but never started.
