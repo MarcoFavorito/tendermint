@@ -36,7 +36,7 @@ func ParseConfig() (*cfg.Config, error) {
 
 // RootCmd is the root command for Tendermint core.
 var RootCmd = &cobra.Command{
-	Use:   "tendermint",
+	Use:   "tendermint EVIL!!!",
 	Short: "Tendermint Core (BFT Consensus) in Go",
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) (err error) {
 		if cmd.Name() == VersionCmd.Name() {
