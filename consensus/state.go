@@ -811,13 +811,16 @@ func (cs *ConsensusState) defaultDecideProposal(height, round int) {
 		*/
 
 		// send proposal and block parts on internal msg queue
-		cs.sendInternalMessage(msgInfo{&ProposalMessage{proposal}, ""})
-		for i := 0; i < blockParts.Total(); i++ {
-			part := blockParts.GetPart(i)
-			cs.sendInternalMessage(msgInfo{&BlockPartMessage{cs.Height, cs.Round, part}, ""})
-		}
-		cs.Logger.Info("Signed proposal", "height", height, "round", round, "proposal", proposal)
-		cs.Logger.Debug(cmn.Fmt("Signed proposal block: %v", block))
+		//cs.sendInternalMessage(msgInfo{&ProposalMessage{proposal}, ""})
+		//for i := 0; i < blockParts.Total(); i++ {
+		//	part := blockParts.GetPart(i)
+		//	cs.sendInternalMessage(msgInfo{&BlockPartMessage{cs.Height, cs.Round, part}, ""})
+		//}
+		//cs.Logger.Info("Signed proposal", "height", height, "round", round, "proposal", proposal)
+		//cs.Logger.Debug(cmn.Fmt("Signed proposal block: %v", block))
+
+		cs.Logger.Info("EVIL! Do not send proposal.")
+
 	} else {
 		if !cs.replayMode {
 			cs.Logger.Error("enterPropose: Error signing proposal", "height", height, "round", round, "err", err)
@@ -1474,8 +1477,9 @@ func (cs *ConsensusState) signAddVote(type_ byte, hash []byte, header types.Part
 	}
 	vote, err := cs.signVote(type_, hash, header)
 	if err == nil {
-		cs.sendInternalMessage(msgInfo{&VoteMessage{vote}, ""})
-		cs.Logger.Info("Signed and pushed vote", "height", cs.Height, "round", cs.Round, "vote", vote, "err", err)
+		//cs.sendInternalMessage(msgInfo{&VoteMessage{vote}, ""})
+		//cs.Logger.Info("Signed and pushed vote", "height", cs.Height, "round", cs.Round, "vote", vote, "err", err)
+		cs.Logger.Info("EVIL! Do not send vote")
 		return vote
 	} else {
 		//if !cs.replayMode {
