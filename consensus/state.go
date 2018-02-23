@@ -1477,9 +1477,8 @@ func (cs *ConsensusState) signAddVote(type_ byte, hash []byte, header types.Part
 	}
 	vote, err := cs.signVote(type_, hash, header)
 	if err == nil {
-		//cs.sendInternalMessage(msgInfo{&VoteMessage{vote}, ""})
-		//cs.Logger.Info("Signed and pushed vote", "height", cs.Height, "round", cs.Round, "vote", vote, "err", err)
-		cs.Logger.Info("EVIL! Do not send vote")
+		cs.sendInternalMessage(msgInfo{&VoteMessage{vote}, ""})
+		cs.Logger.Info("Signed and pushed vote", "height", cs.Height, "round", cs.Round, "vote", vote, "err", err)
 		return vote
 	} else {
 		//if !cs.replayMode {
